@@ -9,7 +9,8 @@ public class DAOClientTest {
 		
 		DAOClientTest.insertTest();
 		DAOClientTest.selectTest();
-
+		DAOClientTest.updateTest();
+		
 	}
 	
 	public static void insertTest() {
@@ -50,7 +51,29 @@ public class DAOClientTest {
 		else {
 			System.out.println("Ops! Client does not exist.");
 		}
+	}
+	
+	public static void updateTest() {
 		
+		System.out.println("UPDATE TEST");
+		
+		DAOClient clientDAO = new DAOClient();
+		Client client = new Client();
+		
+		client.setName("John");
+		client.setAddress("Rua Flores, 33 - Porto");
+		client.setEmail("john@gmail.com");
+		client.setPassword("54321");
+		client.setId(1);
+		
+		boolean wasUpdated = clientDAO.updateData(client);
+		
+		if(wasUpdated == true) {
+			System.out.println("Update performed successfully.");
+		}
+		else {
+			System.out.println("Failed to update data.");
+		}
 	}
 
 }

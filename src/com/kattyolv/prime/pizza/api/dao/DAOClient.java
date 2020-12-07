@@ -73,4 +73,28 @@ public class DAOClient {
 		return null;
 	}
 	
+	public boolean updateData(Client client) {
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(UPDATE);
+			
+			statement.setString(1, client.getName());
+			statement.setString(2, client.getAddress());
+			statement.setString(3, client.getEmail());
+			statement.setString(4, client.getPassword());
+			statement.setInt(5, client.getId());
+			
+			int rowsAffected = statement.executeUpdate();
+			
+			if(rowsAffected > 0) {
+				return true;
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 }
