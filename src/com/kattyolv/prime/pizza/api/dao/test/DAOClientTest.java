@@ -8,7 +8,7 @@ public class DAOClientTest {
 	public static void main(String[] args) {
 		
 		DAOClientTest.insertTest();
-			
+		DAOClientTest.selectTest();
 
 	}
 	
@@ -34,6 +34,23 @@ public class DAOClientTest {
 		else {
 			System.out.println("Fail to insert data.");
 		}
+	}
+	
+	public static void selectTest() {
+		
+		System.out.println("SELECT TEST");
+		
+		DAOClient clientDAO = new DAOClient();
+		
+		Client client = clientDAO.selectClientByEmail("john@gmail.com");
+		
+		if(client != null && client.getEmail().equalsIgnoreCase("john@gmail.com")) {
+			System.out.println("Client was found.");
+		}
+		else {
+			System.out.println("Ops! Client does not exist.");
+		}
+		
 	}
 
 }
