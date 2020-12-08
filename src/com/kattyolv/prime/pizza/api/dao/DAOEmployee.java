@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import com.kattyolv.prime.pizza.api.jdbc.ConnectionJDBC;
+import com.kattyolv.prime.pizza.api.model.Employee;
 
 public class DAOEmployee {
 
@@ -39,6 +41,47 @@ public class DAOEmployee {
 		}
 		
 		return 0;
+	}
+	
+	private boolean executeInsertQuery(Employee employee) throws SQLIntegrityConstraintViolationException,
+		SQLException {
+		
+		PreparedStatement statement = connection.prepareStatement(INSERT);
+		
+		statement.setString(1, employee.getName());
+		statement.setString(2, employee.generateIdentifierNumber());
+		statement.setString(3, employee.getPassword());
+		
+		int rowsAffected = statement.executeUpdate();
+		
+		if(rowsAffected > 0) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean insertData(Employee employee) {
+		
+		boolean wasInserted = false;
+		
+		try {			
+			wasInserted = this.executeInsertQuery(employee);	
+		}
+		catch (SQLIntegrityConstraintViolationException e) {	
+			
+			try {				
+				wasInserted = this.executeInsertQuery(employee);		
+			} 
+			catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return wasInserted;
 	}
 	
 }
