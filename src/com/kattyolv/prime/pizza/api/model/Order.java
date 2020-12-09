@@ -5,7 +5,7 @@ public class Order {
 	private int id;
 	private int quantity;
 	private String status;
-	private int amount;
+	private double amount;
 	private Pizza pizza;
 	private Client client;
 	private Employee employee;
@@ -34,11 +34,11 @@ public class Order {
 		this.status = status;
 	}
 	
-	public int getAmount() {
+	public double getAmount() {
 		return this.amount;
 	}
 	
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	
