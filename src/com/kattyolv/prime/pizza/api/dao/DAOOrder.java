@@ -96,4 +96,25 @@ public class DAOOrder {
 		return null;
 	}
 	
+	public boolean updateStatus(Order order) {
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(UPDATE_STATUS);
+			
+			statement.setString(1, order.getStatus());
+			statement.setInt(2, order.getId());
+			
+			int rowsAffected = statement.executeUpdate();
+			
+			if(rowsAffected > 0) {
+				return true;
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 }

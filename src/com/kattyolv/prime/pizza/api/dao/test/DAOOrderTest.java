@@ -11,9 +11,9 @@ public class DAOOrderTest {
 
 	public static void main(String[] args) {
 		
-		//DAOOrderTest.insertData();
+		DAOOrderTest.insertData();
 		DAOOrderTest.selectDetailsOrder();
-		
+		DAOOrderTest.updateStatus();
 	}
 	
 	public static void insertData() {
@@ -60,7 +60,26 @@ public class DAOOrderTest {
 					"status: " + order.getStatus() + "\n" +
 					"employee: " + order.getEmployee().getName() + "\n");
 		}
+	}
+	
+	public static void updateStatus() {
+
+		System.out.println("UPDATE TEST");
 		
+		DAOOrder orderDAO = new DAOOrder();
+		Order order = new Order();
+		
+		order.setStatus("processing");
+		order.setId(1);
+		
+		boolean wasUpdated = orderDAO.updateStatus(order);
+		
+		if(wasUpdated == true) {
+			System.out.println("Status updated succefully.");
+		}
+		else {
+			System.out.println("Failed to update status.");
+		}	
 	}
 
 }
