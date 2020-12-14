@@ -16,7 +16,7 @@ import com.kattyolv.prime.pizza.api.model.Pizza;
 
 
 @WebServlet("/pizzas")
-public class PizzaServlet extends HttpServlet {
+public class PizzaController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
