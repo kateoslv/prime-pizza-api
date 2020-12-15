@@ -14,7 +14,7 @@ import com.kattyolv.prime.pizza.api.model.Pizza;
 public class DAOOrder {
 
 	private static final String INSERT = "INSERT INTO `order` (id_pizza, id_client, quantity, status, "
-			+ "amount) VALUES (?,?,?,?,?)";
+			+ "total_price) VALUES (?,?,?,?,?)";
 	private static final String SELECT_DETAILS_ORDER = "SELECT o.id, o.quantity, p.name AS pizza, "
 			+ "e.name AS employee, o.`status` FROM `order` o "
 			+ "INNER JOIN pizza p ON p.id = o.id_pizza "

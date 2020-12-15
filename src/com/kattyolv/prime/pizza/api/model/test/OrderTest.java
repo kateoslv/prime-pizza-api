@@ -15,7 +15,7 @@ public class OrderTest {
 		order.setId(2);
 		order.setQuantity(3);
 		order.setStatus("approved");
-		order.setAmount(25);
+		order.setTotalPrice(25);
 		
 		Pizza pizza = new Pizza();
 		pizza.setName("peperoni");
@@ -35,7 +35,7 @@ public class OrderTest {
 		if(order.getId() == 2 &&
 				order.getQuantity() == 3 &&
 				order.getStatus() == "approved" &&
-				order.getAmount() == 25 &&
+				order.getTotalPrice() == 25 &&
 				order.getPizza().getName() == "peperoni" &&
 				order.getClient().getName() == "samuel" &&
 				order.getEmployee().getName() == "ana") {
