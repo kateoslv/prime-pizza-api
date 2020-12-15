@@ -13,6 +13,7 @@ import com.kattyolv.prime.pizza.api.model.Pizza;
 public class DAOPizza {
 
 	private static final String SELECT = "SELECT * FROM pizza";
+	private static final String SELECT_PRICE_BY_ID = "SELECT price FROM pizza WHERE id=?";
 	
 	static Connection connection;
 	
@@ -50,6 +51,30 @@ public class DAOPizza {
 		}
 		
 		return null;
+	}
+	
+	public Double selectPriceById(int id) {
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(SELECT_PRICE_BY_ID);
+			
+			statement.setInt(1, id);
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				double price = resultSet.getDouble("price");
+				
+				return price;
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
 	}
 	
 }

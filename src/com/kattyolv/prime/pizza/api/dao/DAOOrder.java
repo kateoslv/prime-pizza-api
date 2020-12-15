@@ -41,9 +41,16 @@ public class DAOOrder {
 			statement.setInt(3, order.getQuantity());
 			statement.setString(4, order.getStatus());
 			
-			// TODO: get amount from pizza table on the database
+			int pizzaId = order.getPizza().getId();
 			
-			statement.setDouble(5, order.getAmount());
+			DAOPizza pizzaDAO = new DAOPizza();
+			Double pizzaPrice = pizzaDAO.selectPriceById(pizzaId);
+			
+			int quantity = order.getQuantity();
+			
+			Double totalPrice = pizzaPrice * quantity;
+			
+			statement.setDouble(5, totalPrice);
 			
 			int rowsAffected = statement.executeUpdate();
 			

@@ -29,9 +29,8 @@ public class DAOOrderTest {
 		client.setId(1);
 		
 		Order order = new Order();
-		order.setQuantity(1);
+		order.setQuantity(5);
 		order.setStatus("Processing");
-		order.setAmount(9.90);
 		order.setPizza(pizza);
 		order.setClient(client);
 		

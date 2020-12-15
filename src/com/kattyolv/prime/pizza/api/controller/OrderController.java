@@ -60,10 +60,9 @@ public class OrderController extends HttpServlet {
 			String idClient = request.getParameter("idClient");
 			String quantity = request.getParameter("quantity");
 			String status = request.getParameter("status");
-			String amount = request.getParameter("amount");
 			
-			if(idPizza == "" || idClient == "" || quantity == "" || status == "" || amount == "" ||
-					idPizza == null || idClient == null || quantity == null || status == null || amount == null) {
+			if(idPizza == "" || idClient == "" || quantity == "" || status == "" ||
+					idPizza == null || idClient == null || quantity == null || status == null) {
 				
 				response.setStatus(400);
 				return;
@@ -73,13 +72,11 @@ public class OrderController extends HttpServlet {
 			int convertedIdPizza = Integer.parseInt(idPizza);
 			int convertedIdClient = Integer.parseInt(idClient);
 			int convertedQuantity = Integer.parseInt(quantity);
-			double convertedAmount = Double.parseDouble(amount);
 			
 			pizza.setId(convertedIdPizza);
 			client.setId(convertedIdClient);
 			order.setQuantity(convertedQuantity);
 			order.setStatus(status);
-			order.setAmount(convertedAmount);
 			order.setPizza(pizza);
 			order.setClient(client);
 			
