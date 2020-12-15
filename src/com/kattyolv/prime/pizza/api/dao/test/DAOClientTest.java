@@ -10,6 +10,7 @@ public class DAOClientTest {
 		DAOClientTest.insertTest();
 		DAOClientTest.selectTest();
 		DAOClientTest.updateTest();
+		DAOClientTest.selectClientByEmailAndPassword();
 		
 	}
 	
@@ -50,6 +51,22 @@ public class DAOClientTest {
 		}
 		else {
 			System.out.println("Ops! Client does not exist.");
+		}
+	}
+	
+	public static void selectClientByEmailAndPassword() {
+		
+		System.out.println("SELECT BY EMAIL AND PASSWORD TEST");
+		
+		DAOClient clientDAO = new DAOClient();
+		
+		Client client = clientDAO.selectClientByEmailAndPassword("john@gmail.com", "54321");
+		
+		if(client != null) {
+			System.out.println("Client existent.");
+		}
+		else {
+			System.out.println("Ops! Client inexistent.");
 		}
 	}
 	
