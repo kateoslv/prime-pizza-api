@@ -40,6 +40,9 @@ public class DAOOrder {
 			statement.setInt(2, order.getClient().getId());
 			statement.setInt(3, order.getQuantity());
 			statement.setString(4, order.getStatus());
+			
+			// TODO: get amount from pizza table on the database
+			
 			statement.setDouble(5, order.getAmount());
 			
 			int rowsAffected = statement.executeUpdate();
