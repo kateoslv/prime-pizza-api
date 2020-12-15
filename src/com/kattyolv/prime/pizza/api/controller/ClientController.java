@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.kattyolv.prime.pizza.api.cors.Cors;
 import com.kattyolv.prime.pizza.api.dao.DAOClient;
 import com.kattyolv.prime.pizza.api.model.Client;
 
@@ -20,42 +21,57 @@ import com.kattyolv.prime.pizza.api.model.Client;
 public class ClientController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		String email = request.getParameter("email");
-
-		if (email == null) {
-			response.setStatus(400);
-		} 
-		else {
-			DAOClient clientDAO = new DAOClient();
-
-			Client client = clientDAO.selectClientByEmail(email);
-
-			if (client != null) {
-
-				Gson gson = new Gson();
-				String clientJson = gson.toJson(client);
-
-				response.setContentType("application/json");
-
-				PrintWriter out = response.getWriter();
-				out.print(clientJson);
-
-				response.setStatus(200);
-			} 
-			else {
-				response.setStatus(204);
-			}
-		}
-
+	
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		super.doOptions(request, response);
+		
+		Cors.applyPermissionsHeaders(response);
+		
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Cors.applyPermissionsHeaders(response);
+		
+		try {
+			String email = request.getParameter("email");
 
+			if(email == null) {
+				response.setStatus(400);
+			} 
+			else {
+				DAOClient clientDAO = new DAOClient();
+
+				Client client = clientDAO.selectClientByEmail(email);
+
+				if(client != null) {
+
+					Gson gson = new Gson();
+					String clientJson = gson.toJson(client);
+
+					response.setContentType("application/json");
+
+					PrintWriter out = response.getWriter();
+					out.print(clientJson);
+
+					response.setStatus(200);
+				} 
+				else {
+					response.setStatus(204);
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			response.setStatus(500);
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		Cors.applyPermissionsHeaders(response);
+		
 		try {
 			DAOClient clientDAO = new DAOClient();
 			Client client = new Client();
@@ -72,22 +88,24 @@ public class ClientController extends HttpServlet {
 
 			boolean wasInserted = clientDAO.insertData(client);
 
-			if (wasInserted == true) {
+			if(wasInserted == true) {
 				response.setStatus(200);
 			} 
 			else {
 				response.setStatus(400);
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 			response.setStatus(500);
 		}
 
 	}
 
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		Cors.applyPermissionsHeaders(response);
+		
 		try {
 			DAOClient clientDAO = new DAOClient();
 			Client client = new Client();

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.kattyolv.prime.pizza.api.cors.Cors;
 import com.kattyolv.prime.pizza.api.dao.DAOOrder;
 import com.kattyolv.prime.pizza.api.model.Client;
 import com.kattyolv.prime.pizza.api.model.Order;
@@ -24,8 +25,18 @@ public class OrderController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		super.doOptions(request, response);
+		
+		Cors.applyPermissionsHeaders(response);
+		
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		Cors.applyPermissionsHeaders(response);
+		
 		try {
 			DAOOrder orderDAO = new DAOOrder();
 			ArrayList<Order> orders = orderDAO.selectDetailsOrder();
@@ -50,6 +61,8 @@ public class OrderController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		Cors.applyPermissionsHeaders(response);
+		
 		try {
 			DAOOrder orderDAO = new DAOOrder();
 			Order order = new Order();
@@ -97,6 +110,8 @@ public class OrderController extends HttpServlet {
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Cors.applyPermissionsHeaders(response);
 		
 		try {
 			DAOOrder orderDAO = new DAOOrder();
