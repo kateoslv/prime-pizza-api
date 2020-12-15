@@ -1,6 +1,8 @@
 package com.kattyolv.prime.pizza.api.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -97,4 +99,64 @@ public class OrderController extends HttpServlet {
 		
 	}
 
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		try {
+			DAOOrder orderDAO = new DAOOrder();
+			Order order = new Order();
+			
+			InputStreamReader inputStreamReader = new InputStreamReader(request.getInputStream());
+			
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+			
+			String bodyRequest = bufferedReader.readLine();
+			
+			String[] bodyRequestSplitted = bodyRequest.split("&");
+			
+			String idValue = null;
+			String statusValue = null;
+			
+			for(String bodyItem : bodyRequestSplitted) {
+				
+				if(bodyItem.contains("id")) {
+					idValue = bodyItem.replace("id=", "");
+				}
+				else if(bodyItem.contains("status")) {
+					statusValue = bodyItem.replace("status=", "");
+				}
+			}
+			
+			if(idValue == "" || idValue == null) {
+				response.setStatus(400);
+				response.getWriter().println("Id is required.");
+				return;
+			}
+			
+			if(statusValue == "" || statusValue == null) {
+				response.setStatus(400);
+				response.getWriter().println("Status is required.");
+				return;
+			}
+			
+			int convertedId = Integer.parseInt(idValue);
+			
+			order.setId(convertedId);
+			order.setStatus(statusValue);
+			
+			boolean wasUpdated = orderDAO.updateStatus(order);
+			
+			if(wasUpdated == true) {
+				response.setStatus(200);
+			}
+			else {
+				response.setStatus(400);
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			response.setStatus(500);
+		}
+		
+	}
 }
