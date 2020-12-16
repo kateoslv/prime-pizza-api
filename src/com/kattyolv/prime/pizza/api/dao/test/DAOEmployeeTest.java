@@ -9,21 +9,37 @@ public class DAOEmployeeTest {
 		
 		DAOEmployeeTest.selectLastIdTest();
 		DAOEmployeeTest.insertData();
-
+		DAOEmployeeTest.selectByIdentifierNumberAndPassword();
+		
 	}
 	
 	public static void selectLastIdTest() {
 		
 		System.out.println("SELECT LAST ID EMPLOYEE");
 		
-		DAOEmployee employee = new DAOEmployee();
-		int resultExpected = employee.selectLastId();
+		DAOEmployee employeeDAO = new DAOEmployee();
+		int resultExpected = employeeDAO.selectLastId();
 		
 		if(resultExpected == 0) {
 			System.out.println("Result expected.");
 		}
 		else {
 			System.out.println("This was not the expected result.");
+		}
+	}
+	
+	public static void selectByIdentifierNumberAndPassword() {
+		
+		System.out.println("SELECT BY IDENTIFIER NUMBER AND PASSWORD - TEST");
+		
+		DAOEmployee employeeDAO = new DAOEmployee();
+		Employee employee = employeeDAO.selectEmployeeByIdentifierNumberAndPassword("EPP1", "221");
+		
+		if(employee != null) {
+			System.out.println("Employee does exist.");
+		}
+		else {
+			System.out.println("Ops! Employee not found.");
 		}
 	}
 	

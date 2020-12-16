@@ -12,6 +12,8 @@ import com.kattyolv.prime.pizza.api.model.Employee;
 public class DAOEmployee {
 
 	private static final String SELECT_LAST_ID = "SELECT MAX(id) AS last_id FROM employee";
+	private static final String SELECT_EMPLOYEE_BY_IDENTIFIER_NUMBER_AND_PASSWORD = "SELECT * FROM employee WHERE "
+			+ "identifier_number=? AND password=?";
 	private static final String INSERT = "INSERT INTO employee (name, identifier_number, password) "
 			+ "VALUES (?,?,?)";
 	
@@ -43,8 +45,36 @@ public class DAOEmployee {
 		return 0;
 	}
 	
-	private boolean executeInsertQuery(Employee employee) throws SQLIntegrityConstraintViolationException,
-		SQLException {
+	public Employee selectEmployeeByIdentifierNumberAndPassword(String identifierNumber, String password) {
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(SELECT_EMPLOYEE_BY_IDENTIFIER_NUMBER_AND_PASSWORD);
+			
+			statement.setString(1, identifierNumber);
+			statement.setString(2, password);
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				Employee employee = new Employee();
+				
+				employee.setId(resultSet.getInt("id"));
+				employee.setName(resultSet.getString("name"));
+				employee.setIdentifierNumber(resultSet.getString("identifier_number"));
+				employee.setPassword(resultSet.getString("password"));
+				
+				return employee;
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	private boolean executeInsertQuery(Employee employee) throws SQLIntegrityConstraintViolationException, SQLException {
 		
 		PreparedStatement statement = connection.prepareStatement(INSERT);
 		
