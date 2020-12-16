@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.kattyolv.prime.pizza.api.cors.Cors;
 import com.kattyolv.prime.pizza.api.dao.DAOEmployee;
 import com.kattyolv.prime.pizza.api.model.Employee;
 
@@ -21,6 +22,8 @@ public class EmployeeSignInController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		Cors.applyPermissionsHeaders(response);
+		
 		try {
 			
 			DAOEmployee employeeDAO = new DAOEmployee();

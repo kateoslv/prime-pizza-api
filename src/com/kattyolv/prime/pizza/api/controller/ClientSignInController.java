@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.kattyolv.prime.pizza.api.cors.Cors;
 import com.kattyolv.prime.pizza.api.dao.DAOClient;
 import com.kattyolv.prime.pizza.api.model.Client;
 
@@ -19,8 +20,9 @@ public class ClientSignInController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Cors.applyPermissionsHeaders(response);
 		
 		try {
 			DAOClient clientDAO = new DAOClient();
